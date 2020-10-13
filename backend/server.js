@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import colors from 'colors'
 import connectDB from './config/db.js' // .js file extension important when importing files
 import productRoutes from './routes/productRoutes.js'
+import { errorHandler, notFound } from './middleware/errorMiddleware.js'
 
 dotenv.config()
 
@@ -17,6 +18,10 @@ app.get('/', (req, res) => {
 
 // mount productRoutes
 app.use('/api/products', productRoutes) // for anything that goes to /api/products use productRoutes
+
+// Middleware to handle errors
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
